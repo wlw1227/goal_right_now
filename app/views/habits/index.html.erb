@@ -4,17 +4,36 @@
 <h1 class="text-center">Habits</h1>
 </br>
 
-<% @habits.each do |habit| %>
-  <div class="card" style="width: 24rem;">
-    <div class="card-header text-center"><%= habit.description %></div>
-    <div class="card-body">
-      <%= render "day" %>
-      <%= link_to 'Edit', edit_habit_path(habit) %>
-      <%= link_to 'Destroy', habit, method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="row g-4">
+  <% @habits.each do |habit| %>
+    <% if habit.user == current_user %>
+    <div class="card" style="width: 26rem;">
+      <div class="card-header text-center"><%= habit.description %></div>
+      <div class="card-body">
+        <div style='display: grid; grid-template-columns: repeat(10, 1fr)'>
+          <% checked_days = habit.checked_days %>
+          <% if habit.started_at && habit.ends_at %>
+            <% (habit.started_at.to_date..habit.ends_at.to_date).to_a.each_with_index do |day, index| %>
+              <%= render partial:'day', locals: {checked_days: checked_days.map(&:day), day: day.to_date, index: index} %>
+            <% end %> 
+          <% end %>
+        </div>
+        </br>
+        <% if habit.started_at && habit.ends_at %>
+            <%= link_to 'Check', checked_days_path(habit, {day: Date.today}) %>
+        <% end %>
+          <div class="float-end">
+            <%= link_to 'Reset', reset_habit_path(habit) %>
+            <%= link_to 'Edit', edit_habit_path(habit) %>
+            <%= link_to 'Destroy', habit, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </div>
+      </div>
     </div>
-  </div>
-  </br>
-<% end %>
+    <% end %>
+    </br>
+  <% end %>
+</div>
+
 
 
 <br>

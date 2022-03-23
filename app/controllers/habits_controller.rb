@@ -1,9 +1,9 @@
 class HabitsController < ApplicationController
-  before_action :set_habit, only: %i[ show edit update destroy ]
-
+  before_action :set_habit, only: %i[ show edit update destroy reset ]
+  before_action :authenticate_user!, except: [:index, :show]
   # GET /habits or /habits.json
   def index
-    @habits = Habit.all
+    @habits = Habit.all.order(created_at: :desc)
   end
 
   # GET /habits/1 or /habits/1.json
@@ -47,6 +47,18 @@ class HabitsController < ApplicationController
     end
   end
 
+  def reset
+    respond_to do |format|
+      if @habit.reset!
+        format.html { redirect_to habit_url(@habit), notice: "Habit was successfully updated." }
+        format.json { render :show, status: :ok, location: @habit }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @habit.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /habits/1 or /habits/1.json
   def destroy
     @habit.destroy
@@ -65,6 +77,6 @@ class HabitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def habit_params
-      params.require(:habit).permit(:description)
+      params.require(:habit).permit(:description, :user_id)
     end
 end

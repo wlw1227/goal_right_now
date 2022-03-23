@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :habits
+  resources :habits do
+    member do
+      resources :checked_days
+      get :reset
+    end
+  end
   devise_for :users
   #get 'home/index'
   root 'home#index'
