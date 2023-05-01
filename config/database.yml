@@ -20,6 +20,6 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
-  database: goal_right_now_production
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: postgres_tsaf
+  username: postgres_tsaf_user
+  password: gjqllfIafF2Yb1pXA70H70XNe16rF9TE
