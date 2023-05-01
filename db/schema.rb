@@ -25,18 +25,10 @@ ActiveRecord::Schema.define(version: 2022_03_17_094526) do
     t.index ["user_id"], name: "index_checked_days_on_user_id"
   end
 
-  create_table "days", force: :cascade do |t|
-    t.integer "buttons"
-    t.boolean "checked"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "habits", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "days"
     t.integer "user_id"
     t.datetime "started_at"
     t.datetime "ends_at"
