@@ -19,7 +19,7 @@ test:
 
 production:
   <<: *default
-  url: postgres://postgres_tsaf_user:gjqllfIafF2Yb1pXA70H70XNe16rF9TE@dpg-ch7rlvusi8uhth2kj3o0-a/postgres_tsaf
+  url: "postgres://postgres_tsaf_user:gjqllfIafF2Yb1pXA70H70XNe16rF9TE@dpg-ch7rlvusi8uhth2kj3o0-a/postgres_tsaf"
   database: goal_right_now_production
   username: <%= ENV["DATABASE_USERNAME"] %>
   password: <%= ENV["DATABASE_PASSWORD"] %>
